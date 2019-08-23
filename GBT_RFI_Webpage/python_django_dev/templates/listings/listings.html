@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1>Listings</h1>
+
+<!-- Breadcrumb -->
+
+<section id="bc" class = "mt-3">
+    <div class = "container">
+        <nav aria-label="breadcrumb">
+                    <a href="{% url 'index' %}">
+                        Back to Search
+                    </a> 
+        </nav>
+    </div>
+</section>
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<div id="myDiv" style="width:1200px;height:700px;text-align:center;"></div>
+<script>
+var trace1 = {
+    x: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    y: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    name: 'Name of Trace 1',
+    type: 'scatter',
+    mode:'markers'
+  };
+  var trace2 = {
+    x: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    y: [1, 0, 3, 2, 5, 4, 7, 6, 8],
+    name: 'Name of Trace 2',
+    type: 'scatter',
+    mode:'markers'
+  };
+  var data = [trace1, trace2];
+  var layout = {
+    title: {
+      text:'Mean of Requested RFI Data',
+      font: {
+        family: 'Courier New, monospace',
+        size: 24
+      },
+      xref: 'paper',
+      x: 0.05,
+    },
+    xaxis: {
+      title: {
+        text: 'Frequency (MHz)',
+        font: {
+          family: 'Courier New, monospace',
+          size: 18,
+          color: '#7f7f7f'
+        }
+      },
+    },
+    yaxis: {
+      title: {
+        text: 'Intensity (Jy)',
+        font: {
+          family: 'Courier New, monospace',
+          size: 18,
+          color: '#7f7f7f'
+        }
+      }
+    }
+  };
+  
+  Plotly.newPlot('myDiv', data, layout);
+  
+  
+</script>
+
+{% endblock %}
