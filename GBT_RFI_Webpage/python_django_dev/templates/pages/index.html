@@ -1,6 +1,115 @@
 {% extends 'base.html' %} 
 
+{% load static %}
+
 {% block content %}
-<h1>RFI Scans and Known Sources </h1>
-<h5> by Joy Skipper (jskipper@nrao.edu)</h5>
+
+ <!-- Showcase -->
+ <section id="showcase">
+
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+
+
+        <div class = "wp-block-editor-blocks-wrapper alignfull" style="padding-top:50px; padding-bottom:50px; margin-top:0px; margin-bottom=50px; background-image:url(https://greenbankobservatory.org/wp-content/uploads/2016/05/telescope.png);">
+            <h1 class="hero__heading" style="color:#eeeeee">RFI Scans and Known Sources</h1>
+            <h2 class="lead" style="color:#eeeeee">by Joy Skipper (jskipper@nrao.edu)</h2>
+            </div>
+          <br><br>
+          <div class="search">
+            <form action="search.html">
+              <!-- Form Row 1 -->
+              <div class="form-row">
+                    <label style="text-align: left;">Search by Receiver</label>
+                    <select name="receiver" class="form-control">
+                      <option selected="true" disabled="disabled">Receiver (Default All)</option>
+                      <option value="PF1">All Receivers</option>
+                      <option value="PF1">Prime Focus 1</option>
+                      <option value="PF2">Prime Focus 2</option>
+                      <option value="Rcvr_342">Rcvr_342</option>
+                      <option value="Rcvr_450">Rcvr_450</option>
+                      <option value="Rcvr_600">Rcvr_600</option>
+                      <option value="Rcvr_800">Rcvr_800</option>
+                      <option value="L_band">Rcvr1_2</option>
+                      <option value="S_band">Rcvr2_3</option>
+                      <option value="C_band">Rcvr4_6</option>
+                      <option value="X_band">Rcvr8_10</option>
+                      <option value="Ku_band">Rcvr12_18</option>
+                      <option value="KFPA">RcvrArray18_26</option>
+                      <option value="Ka_band">Rcvr26_40</option>
+                      <option value="Q_band">Rcvr40_52</option>
+                      <option value="W_band">Rcvr68_92</option>
+                      <option value="Argus">Rcvr68_92</option>
+                      <option value="MUSTANG">RcvrMBA1_2</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                        <label style="text-align:left;">Search by Filename</label>
+                        <input type="text" id="Filename" name="Filename" placeholder="Any Filename">
+                       </div>
+
+                       <div class="form-row">
+                            <label style="text-align:left;">Search by Project ID</label>
+                            <input type="text" name="Project ID" placeholder="Any Project">
+                           </div>
+    
+                <div class="col-md-4 mb-3" style="float:left;">
+                  <label>Oldest Scan Date</label>
+                  <input type="datetime-local" name="Oldest Scan Date" class="form-control" placeholder="Any Date">
+                </div>
+
+                <div class="col-md-4 mb-3" style="float:left;">
+                  <label>Newest Scan Date</label>
+                  <input type="datetime-local" name="Newest Scan Date" class="form-control" placeholder="Any Date">
+                </div>
+                <br><br><br><br>
+  
+
+                <div class="col-md-4 mb-3" style="float:left;">
+                    <label >Azimuth Min (deg)</label>
+                    <input type="number" id="Azimuth Min" name="Azimuth Min" min="0" max="360" >
+                </div>
+
+                <div class="col-md-4 mb-3" style="float:left;">
+                        <label >Azimuth Max (deg)</label>
+                        <input type="number" id="Azimuth Max" name="Azimuth Max" min="0" max="360">
+                    </div>
+
+                <br><br><br><br>
+
+                <div class="col-md-4 mb-3" style="float:left;">
+                        <label >Elevation Min (deg)</label>
+                        <input type="number" id="Elevation Min" name="Elevation Min" min="0" max="90" >
+                    </div>
+    
+                    <div class="col-md-4 mb-3" style="float:left;">
+                            <label >Elevation Max (deg)</label>
+                            <input type="number" id="Elevation Max" name="Elevation Max" min="0" max="90">
+                        </div>
+
+                        <br><br><br><br>
+
+
+
+
+                <div class="col-md-4 mb-3" style="float:left;">
+                    <label >Frequency Min (MHz)</label>
+                    <input type="number" id="Frequency Min" name="Frequency Min" min="0" >
+                </div>
+    
+                <div class="col-md-4 mb-3" style="float:left;">
+                    <label >Frequency Max (MHz)</label>
+                    <input type="number" id="Frequency Max" name="Frequency Max" min="0">
+                </div>
+              </div>
+              <br><br><br><br>
+              <button class="button" type="Submit">Get Data</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 {% endblock %}
