@@ -3,6 +3,7 @@
 
 {% block content %}
 
+
 <h1>Listings</h1>
 
 <!-- Breadcrumb -->
@@ -16,13 +17,26 @@
         </nav>
     </div>
 </section>
-
+<script src = "{% static 'js/node_modules/arraylist/ArrayList.js' %}">
+    var datapoints = new ArrayList
+</script>
+    
+    {% if listings %}
+        {% for listing in listings %}
+        <p>{{listing.frequency_mhz}}</p>
+        {% endfor %}
+    {% else %}
+    <div class="col-md-12">
+        <p> Sorry, no scans matched your search. Please try broadening your search parameters.</p>
+    </div>
+    
+    {% endif %}
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 <div id="myDiv" style="width:1200px;height:700px;text-align:center;"></div>
 <script>
 var trace1 = {
-    x: [0, 1, 2, 3, 4, 5, 6, 7, 8],
+    x: [1, 2, 3, 4, 5, 6, 7, 8],
     y: [0, 1, 2, 3, 4, 5, 6, 7, 8],
     name: 'Name of Trace 1',
     type: 'scatter',
@@ -72,5 +86,19 @@ var trace1 = {
   
   
 </script>
+
+<br><br><br><br><br><br>
+
+<h2 style='text-align:center'>Choose Files to Download:</h2>
+
+
+  <input type="checkbox" name="file1" value="fits" > .fits file &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         
+  <input type="checkbox" name="file2" value="txt" > .txt file <br><br>
+  <input type="checkbox" name="file3" value="mean" > Mean  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="checkbox" name="file4" value="median" > Median  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="checkbox" name="file5" value="mode" > Mode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="checkbox" name="file6" value="individual" > Individual files <br><br>
+  <button class="button" type="Submit" style="position:relative;top:50%;left:50%;margin: -20px -75px; ">Download Data</button>
+
 
 {% endblock %}
