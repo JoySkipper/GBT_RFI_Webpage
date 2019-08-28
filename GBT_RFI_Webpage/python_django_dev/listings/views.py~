@@ -4,9 +4,9 @@ from .models import MasterRfiFlaggedCatalog
 
 # Create your views here.
 def index(request):
-    listings = MasterRfiCatalog.objects.all()
+    listings = MasterRFiCatalog.objects.all()
     context = {'listings': listings}
-    return render(request, 'listings/listings.html',context)
+    return render(request, 'listings/listings.html', context)
 
 def listing(request):
     return render(request, 'listings/listing.html')
