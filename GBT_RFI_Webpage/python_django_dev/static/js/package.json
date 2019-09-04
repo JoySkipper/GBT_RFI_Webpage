@@ -9,7 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "arraylist": "^0.1.0",
+    "chart.js": "^2.8.0",
+    "chartjs-plugin-zoom": "^0.7.3",
     "moment": "^2.24.0"
   }
 }

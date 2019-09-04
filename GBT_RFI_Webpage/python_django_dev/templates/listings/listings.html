@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
+
 {% block content %}
 
 
@@ -17,14 +18,44 @@
         </nav>
     </div>
 </section>
-<script src = "{% static 'js/node_modules/arraylist/ArrayList.js' %}">
-    var datapoints = new ArrayList
-</script>
+<script>
     
-    {% if listings %}
-        {% for listing in listings %}
-        <p>{{listing.frequency_mhz}}</p>
-        {% endfor %}
+</script>
+   
+    {% if data %}
+        <!--<div id="myChart" style="width:1200px;height:700px;text-align:center;"></div>-->
+        <!--<canvas id="myChart" width="400" height="300"></canvas>-->
+        <!--<script src="{% static 'js/node_modules/chart.js/dist/Chart.bundle.js' %}"></script>
+        <script src="{% static 'js/node_modules/chart.js/dist/Chart.bundle.min.js' %}"></script>
+        <script src="{% static 'js/node_modules/chartjs-plugin-zoom/chartjs-plugin-zoom.min.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8"></script>
+        <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+        <div class="ct-chart ct-golden-section" id="chart1"></div>-->
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+        <div id="tester" style="width:600px;height:250px;"></div>
+
+        <script>
+
+                var listings = "{{data}}";
+                console.log(listings)
+                //listings = listings.split('&quot;').join('\"');
+                listings = (JSON.parse(listings));
+                console.log(listings)
+                var listing;
+                var frequencies = [];
+                var intensities = [];
+                for (listing=0; listing < (listings.length); listing++){
+                  frequencies.push(listings[listing][0]);
+                  intensities.push(listings[listing][1]);
+                }
+                TESTER = document.getElementById('tester');
+                Plotly.plot( TESTER, [{
+                x: frequencies,
+                y: intensities }], {
+                margin: { t: 0 } } );
+            </script>
+        
+
     {% else %}
     <div class="col-md-12">
         <p> Sorry, no scans matched your search. Please try broadening your search parameters.</p>
@@ -32,57 +63,10 @@
     
     {% endif %}
 
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<div id="myDiv" style="width:1200px;height:700px;text-align:center;"></div>
+
+
 <script>
-var trace1 = {
-    x: [1, 2, 3, 4, 5, 6, 7, 8],
-    y: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-    name: 'Name of Trace 1',
-    type: 'scatter',
-    mode:'markers'
-  };
-  var trace2 = {
-    x: [0, 1, 2, 3, 4, 5, 6, 7, 8],
-    y: [1, 0, 3, 2, 5, 4, 7, 6, 8],
-    name: 'Name of Trace 2',
-    type: 'scatter',
-    mode:'markers'
-  };
-  var data = [trace1, trace2];
-  var layout = {
-    title: {
-      text:'Mean of Requested RFI Data',
-      font: {
-        family: 'Courier New, monospace',
-        size: 24
-      },
-      xref: 'paper',
-      x: 0.05,
-    },
-    xaxis: {
-      title: {
-        text: 'Frequency (MHz)',
-        font: {
-          family: 'Courier New, monospace',
-          size: 18,
-          color: '#7f7f7f'
-        }
-      },
-    },
-    yaxis: {
-      title: {
-        text: 'Intensity (Jy)',
-        font: {
-          family: 'Courier New, monospace',
-          size: 18,
-          color: '#7f7f7f'
-        }
-      }
-    }
-  };
-  
-  Plotly.newPlot('myDiv', data, layout);
+
   
   
 </script>
