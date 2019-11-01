@@ -14,16 +14,37 @@ import pylab
 import pandas as pd
 import numpy as np
 from django.db.models import Avg
-
+from django.http import StreamingHttpResponse, HttpResponse
+import csv
+import time
 # Create your views here.
 
 import cProfile
 
+
+from django.views.decorators.csrf import csrf_exempt
+
+
+class Echo:
+    """An object that implements just the write method of the file-like
+    interface.
+    """
+    def write(self, value):
+        """Write the value by returning it, instead of storing in a buffer."""
+        return value
+
+
+
 def index(request):
+    #max frequency value
     greatest_freq = 1373.0
     least_freq = 1372.0
-    range_freqs = float(greatest_freq - float(least_freq))
-    step_value = range_freqs/500.0
+    #range and steps needed if we end up doing the interactive graph. 
+    #range_freqs = float(greatest_freq - float(least_freq))
+    #step_value = range_freqs/20.0
+
+    #This block is for the interactive graph. It goes through each step in frequency and averages the intensity for that frequency range, then appends it to listings
+    """
     listings = []
     mysql_queries = []
     for step in np.arange(least_freq,greatest_freq,step_value):
@@ -32,28 +53,44 @@ def index(request):
         freq_temp = step+step_value/2.0
         print(freq_temp)
         listings.append([freq_temp,float(list(listing)[0])])
-     
+    """
+
+    """
+    #Calls all values from the database in a given frequency range
+    listings = MasterRfiCatalog.objects.filter(frequency_mhz__gt=str(least_freq)).filter(frequency_mhz__lt=str(greatest_freq)).distinct().values()
+    #Create the pseudo buffer to write to so we're not storing anything large while we load the file
+    pseudo_buffer = Echo()
+    writer = csv.writer(pseudo_buffer)
+    #Stream the data from the database to a file
+    response = StreamingHttpResponse((writer.writerow([str(single_list['frequency_mhz']),str(single_list['intensity_jy'])]) for single_list in listings),
+                                     content_type="text/csv")
+    #Create the response as the file
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    #print("listings: "+str(listings))
+    """
+    #right now, we're not returning the downloaded file, just the static HTML page
+    return render(request,'listings/listings.html')
     
-    #listings.frequency_mhz = gaussian_filter1d(F('frequency_mhz'),10)
-    #listings.intensity_jy = gaussian_filter1d(F('intensity_jy'),10)
-    #listings.save()
-    #listings = MasterRfiCatalog.objects.filter(frequency_mhz='1372.54550')
-    #context_dict['listings']=json.dumps(listings)
+    """
     context_dict = {}
-    #context_dict['listings_json'] = []
-    #for listing in listings:
-    #    row = []
-    #    for parameter in listing:
-    #        row.append((json.dumps(parameter,cls=DjangoJSONEncoder)))
-    #    context_dict['listings_json'].append(row)
     context_dict['data'] = json.dumps(listings,cls=DjangoJSONEncoder)
-    #context_dict['listings_json'] = [[(json.dumps(list(parameter),cls=DjangoJSONEncoder)) for parameter in listing for listing in listings]] 
-    #context = {'listings': listings}
-    #listings_json = json.dumps(list(listings),cls=DjangoJSONEncoder)
     return render(request, 'listings/listings.html',context_dict)
+    """
 
 def listing(request):
     return render(request, 'listings/listing.html')
 
 def search(request):
     return render(request, 'listings/search.html')
+
+def waiting(request):
+    return render(request, 'listings/waiting.html')
+
+def validate_username(request):
+    username_data = {"is_taken":True}
+    return JsonResponse(username_data)
+
+@csrf_exempt
+def django_save_me(request):
+    time.sleep(5)
+    return HttpResponse("Django to save the day!")

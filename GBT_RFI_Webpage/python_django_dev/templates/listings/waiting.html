@@ -1,0 +1,68 @@
+ 
+<html>
+    <header><title>This is title</title></header>
+    <body>
+   
+
+
+    <button id="DuyButton" style="background-color:purple; border-color:purple; color:white" >Submit</button>
+    <!--Make a Button that's purple with white text-->
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Import Jquery, a library that ajax is a part of-->
+    <script>
+        document.getElementById("DuyButton").onclick = function(){submit_ajax()};
+        // On click you want to submit the ajax script
+
+
+        function submit_ajax(){
+            console.log("Please wait! Request working...")
+            // let the user know that you're doing something
+            $.ajax({
+                url:"django_save_me",
+                //calls the django_save_me view
+                type: "GET",
+                //getting data, defines the http request type
+
+                data:{1:2},
+                // the data you submit with your request (in our case, we'd want to submit our frequency ranges and such to download)
+
+                success: function(return_value) {
+                    console.log("I'm reporting success")
+                    // on success, we will download the data (eventually))
+                },
+
+                error : function(xhr,errmsg,err){
+                    console.log("I'm reporting an error")
+                    // on failure, let the user know there's an error
+                }
+            });
+        };       
+        
+        /*
+        $("#id_username").change(function () {
+            console.log( $(this).val() );
+          });
+        
+        $.ajax({
+            url: '/ajax/validate_username/',
+            dataType: 'json',
+            success: function (validate_username) {
+              if (username_data.return_value) {
+                alert("ajax returned successfully");
+              }
+            }
+          });
+        */
+        </script>
+    <!--
+    <script>
+        function redirect(){
+            window.location.href = "/listings/search";
+        }
+        setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+    </script>
+-->
+</body>
+    </html>
+    
