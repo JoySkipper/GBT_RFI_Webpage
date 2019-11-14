@@ -92,5 +92,20 @@ def validate_username(request):
 
 @csrf_exempt
 def django_save_me(request):
-    time.sleep(5)
-    return HttpResponse("Django to save the day!")
+    least_freq = request.GET['least_freq']
+    greatest_freq = request.GET['greatest_freq']
+    #Calls all values from the database in a given frequency range ---make this the data ajax request
+    listings = MasterRfiCatalog.objects.filter(frequency_mhz__gt=str(least_freq)).filter(frequency_mhz__lt=str(greatest_freq)).values()
+    #check up on distinct()
+    #Create the pseudo buffer to write to so we're not storing anything large while we load the file
+    pseudo_buffer = Echo()
+    writer = csv.writer(pseudo_buffer)
+    #Stream the data from the database to a file
+    response = StreamingHttpResponse((writer.writerow([str(single_list['frequency_mhz']),str(single_list['intensity_jy'])]) for single_list in listings),
+                                      content_type="text/csv")
+    #json_data = { "frequency":[single_list['frequency_mhz'] for single list in listings], "intensity":[single_list["intensity_jy"] for single_list in listings]}
+    #Create the response as the file
+    #response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    #resp = http.HttpResponse(content_type="application/json")
+    #json.dump(json_data,resp)
+    return response
