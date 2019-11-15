@@ -55,8 +55,8 @@
     </div>
 
     <script>
-        document.getElementById("DuyButton").onclick = function(){submit_ajax()};
-        // On click you want to submit the ajax script
+        window.onload = function(){submit_ajax()};
+        // Once the page has loaded you want to submit the ajax script
 
 
         function submit_ajax(){
@@ -117,21 +117,6 @@
             }); 
         };       
         
-        /*
-        $("#id_username").change(function () {
-            console.log( $(this).val() );
-          });
-        
-        $.ajax({
-            url: '/ajax/validate_username/',
-            dataType: 'json',
-            success: function (validate_username) {
-              if (username_data.return_value) {
-                alert("ajax returned successfully");
-              }
-            }
-          });
-        */
         </script>
 
         
