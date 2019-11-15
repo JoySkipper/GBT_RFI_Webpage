@@ -37,7 +37,7 @@
     </style>
 </head>
 
-<h1>Listings</h1>
+<h1>Data Retrieval</h1>
 
 <!-- Breadcrumb -->
 
@@ -56,6 +56,7 @@
 <div class="loader" id="myloader"></div>
 
 <div id="loading_text" style="display:none; text-align: center;">
+    <br><br>
     <h3>Getting your data from the database. Please wait, this may take some time.</h3>
 </div>
 <div id="error_text" style="display:none; text-align: center;">
@@ -63,7 +64,7 @@
     </div>
 <div id="return_text" style="display:none; text-align: center;">
     <br><br>
-    <h3>Your data has been retrieved. Please scroll down to select your download preferences.</h3>
+    <h3>Your data has been retrieved. You should have received a prompt to download your files.</h3>
     <br><br>
 </div>
 
@@ -73,19 +74,10 @@
 <br><br><br><br><br><br>
 
 <div id="tester" style="width:800px;height:600px;border: 5px solid purple; padding: 100px; margin:auto; background-color: lightgrey;text-align:center;">
-    <br><br><br><br><br><h3>Interactive graphs of data is a feature we hope to implement here soon!</h3>
+    <br><br><br><br><br><h3>Interactive graphs of data coming soon!</h3>
 </div>
 <br><br>
-<h2 style='text-align:center'>Choose Files to Download:</h2>
 
-
-  <input type="checkbox" name="file1" value="fits" > .fits file &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         
-  <input type="checkbox" name="file2" value="txt" > .txt file <br><br>
-  <input type="checkbox" name="file3" value="mean" > Mean  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <input type="checkbox" name="file4" value="median" > Median  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <input type="checkbox" name="file5" value="mode" > Mode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <input type="checkbox" name="file6" value="individual" > Individual files <br><br>
-  <button class="button" style="position:relative;top:50%;left:50%;margin: -20px -75px; ">Download Data</button>
 
   <script>
         var Download = 
@@ -142,6 +134,7 @@
                     $('#loading_text').hide(); 
                     $('#return_text').show();                
                     Download.save(response,"RFI_data.txt")
+                    return response;
                     // on success, we will download the data
                 },
     
@@ -151,9 +144,12 @@
                     $('#error_text').show();
                     // on failure, let the user know there's an error
                 }
+                
             }); 
-            return response;
-        };       
+            //return response;
+        };    
+        
+        //console.log(response)
         
         </script>
 
