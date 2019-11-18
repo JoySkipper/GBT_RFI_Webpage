@@ -17,6 +17,7 @@ from django.db.models import Avg
 from django.http import StreamingHttpResponse, HttpResponse
 import csv
 import time
+from listings.choices import receiver_choices
 # Create your views here.
 
 import cProfile
@@ -36,6 +37,10 @@ class Echo:
 
 
 def index(request):
+    context = {
+        'receiver_choices':receiver_choices,
+    }
+
     #max frequency value
     greatest_freq = 1373.0
     least_freq = 1372.0
@@ -69,7 +74,7 @@ def index(request):
     #print("listings: "+str(listings))
     """
     #right now, we're not returning the downloaded file, just the static HTML page
-    return render(request,'listings/listings.html')
+    return render(request,'listings/listings.html',context)
     
     """
     context_dict = {}
