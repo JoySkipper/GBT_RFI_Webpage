@@ -24,24 +24,9 @@
                     <label style="text-align: left;">Search by Receiver</label>
                     <select name="receiver" class="form-control">
                       <option selected="true" disabled="disabled">Receiver (Default All)</option>
-                      <option value="PF1">All Receivers</option>
-                      <option value="PF1">Prime Focus 1</option>
-                      <option value="PF2">Prime Focus 2</option>
-                      <option value="Rcvr_342">Rcvr_342</option>
-                      <option value="Rcvr_450">Rcvr_450</option>
-                      <option value="Rcvr_600">Rcvr_600</option>
-                      <option value="Rcvr_800">Rcvr_800</option>
-                      <option value="L_band">Rcvr1_2</option>
-                      <option value="S_band">Rcvr2_3</option>
-                      <option value="C_band">Rcvr4_6</option>
-                      <option value="X_band">Rcvr8_10</option>
-                      <option value="Ku_band">Rcvr12_18</option>
-                      <option value="KFPA">RcvrArray18_26</option>
-                      <option value="Ka_band">Rcvr26_40</option>
-                      <option value="Q_band">Rcvr40_52</option>
-                      <option value="W_band">Rcvr68_92</option>
-                      <option value="Argus">Rcvr68_92</option>
-                      <option value="MUSTANG">RcvrMBA1_2</option>
+                        {% for rcvr_key,rcvr_value in receiver_choices.items %}
+                            <option value="{{ rcvr_key }}">{{ rcvr_value }}</option>
+                        {% endfor %}
                     </select>
                   </div>
 
@@ -122,7 +107,7 @@
               
             </form>
             <!--<button class="button" type="Submit">Get Data</button>-->
-            <form action="listings/" method="get">
+            <form action="{% url 'listings' %}" method="get">
                 <input type="submit" value="Get Data" style="background-color: #8557A3; border-color: #8557A3; color: white;"
                      name="Submit" id="frm1_submit" />
             </form>
