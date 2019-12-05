@@ -17,3 +17,4 @@ receiver_choices = {
 "Argus":'Rcvr68_92',
 "MUSTANG":'RcvrMBA1_2'
 }
+

@@ -18,60 +18,60 @@
             </div>
           <br><br>
           <div class="search">
-            <form action="search.html">
+            <form action="{% url 'listings' %}" method="GET">
               <!-- Form Row 1 -->
               <div class="form-row">
                     <label style="text-align: left;">Search by Receiver</label>
-                    <select name="receiver" class="form-control">
+                    <select id='receiver' name="receiver" class="form-control">
                       <option selected="true" disabled="disabled">Receiver (Default All)</option>
                         {% for rcvr_key,rcvr_value in receiver_choices.items %}
-                            <option value="{{ rcvr_key }}">{{ rcvr_value }}</option>
+                            <option value="{{ rcvr_value }}">{{ rcvr_key }}</option>
                         {% endfor %}
                     </select>
                   </div>
 
                   <div class="col-md-6 mb-3">
                         <label style="text-align:left;">Search by Filename</label>
-                        <input type="text" id="Filename" name="Filename" placeholder="Any Filename">
+                        <input type="text" id="filename" name="filename" placeholder="Any Filename">
                        </div>
 
                        <div class="form-row">
                             <label style="text-align:left;">Search by Project ID</label>
-                            <input type="text" name="Project ID" placeholder="Any Project">
+                            <input type="text" id="projid" name="projid" placeholder="Any Project">
                            </div>
     
                 <div class="col-md-4 mb-3" style="float:left;">
                   <label>Oldest Scan Date</label>
-                  <input type="datetime-local" name="Oldest Scan Date" class="form-control" placeholder="Any Date" style="width:200px;">
+                  <input type="date" id="oldest_scan_date" name="oldest_scan_date" class="form-control" style="width:200px;">
                 </div>
 
                 <div class="col-md-4 mb-3" style="float:left;">
                   <label>Newest Scan Date</label>
-                  <input type="datetime-local" name="Newest Scan Date" class="form-control" placeholder="Any Date">
+                  <input type="date" id='newest_scan_date' name="newest_scan_date" class="form-control">
                 </div>
                 <br><br><br><br>
   
 
                 <div class="col-md-4 mb-3" style="float:left;">
                     <label >Azimuth Min (deg)</label>
-                    <input type="number" id="Azimuth Min" name="Azimuth Min" min="0" max="360" >
+                    <input type="number" id="azimuth_min" name="azimuth_min" min="0" max="360" >
                 </div>
 
                 <div class="col-md-4 mb-3" style="float:left;">
                         <label >Azimuth Max (deg)</label>
-                        <input type="number" id="Azimuth Max" name="Azimuth Max" min="0" max="360">
+                        <input type="number" id="azimuth_max" name="azimuth_max" min="0" max="360">
                     </div>
 
                 <br><br><br><br>
 
                 <div class="col-md-4 mb-3" style="float:left;">
                         <label >Elevation Min (deg)</label>
-                        <input type="number" id="Elevation Min" name="Elevation Min" min="0" max="90" >
+                        <input type="number" id="elevation_min" name="elevation_min" min="0" max="90" >
                     </div>
     
                     <div class="col-md-4 mb-3" style="float:left;">
                             <label >Elevation Max (deg)</label>
-                            <input type="number" id="Elevation Max" name="Elevation Max" min="0" max="90">
+                            <input type="number" id="elevation_max" name="elevation_max" min="0" max="90">
                         </div>
 
                         <br><br><br><br>
@@ -81,12 +81,12 @@
 
                 <div class="col-md-4 mb-3" style="float:left;">
                     <label >Frequency Min (MHz)</label>
-                    <input type="number" id="Frequency Min" name="Frequency Min" min="0" >
+                    <input type="number" id="frequency_min" name="frequency_min" min="0" >
                 </div>
     
                 <div class="col-md-4 mb-3" style="float:left;">
                     <label >Frequency Max (MHz)</label>
-                    <input type="number" id="Frequency Max" name="Frequency Max" min="0">
+                    <input type="number" id="frequency_max" name="frequency_max" min="0">
                 </div>
               </div>
               <br><br><br><br>
@@ -104,13 +104,11 @@
   <input type="checkbox" name="file5" value="mode" > Mode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="checkbox" name="file6" value="individual" > Individual files <br><br>
   <button class="button" style="position:relative;top:50%;left:50%;margin: -20px -75px; ">Download Data</button>-->
-              
+  <input type="submit" value="Get Data" style="background-color: #8557A3; border-color: #8557A3; color: white;"
+  name="Submit" id="frm1_submit" />             
             </form>
             <!--<button class="button" type="Submit">Get Data</button>-->
-            <form action="{% url 'listings' %}" method="get">
-                <input type="submit" value="Get Data" style="background-color: #8557A3; border-color: #8557A3; color: white;"
-                     name="Submit" id="frm1_submit" />
-            </form>
+
           </div>
         </div>
       </div>

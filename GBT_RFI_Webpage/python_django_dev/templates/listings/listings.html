@@ -106,8 +106,28 @@
                 )
             );
         };
-  </script>
 
+        function getUrlVars() {
+            var vars = {};
+            var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                vars[key] = value;
+            });
+            return vars;
+        }
+
+        function getUrlParam(parameter, defaultvalue){
+            var urlparameter = defaultvalue;
+            if(window.location.href.indexOf(parameter) > -1){
+                urlparameter = getUrlVars()[parameter];
+                }
+            return urlparameter;
+        }
+        
+        
+        
+        
+  </script>
+<script> src='js/node_modules/url-parse/dist/url-parse.min.js' </script>
 
   <script>
         //var return_first = function(){submit_ajax()};
@@ -117,7 +137,9 @@
     
         function submit_ajax(){
             $('#myloader').show();
-            $('#loading_text').show();
+            $('#loading_text').show();  
+            console.log(window.location.href)
+            var url = window.location.href
            
             // let the user know that you're doing something
             $.ajax({
@@ -125,8 +147,26 @@
                 //calls the django_save_me view
                 type: "GET",
                 //getting data, defines the http request type
-    
-                data:{"least_freq":1372.0, "greatest_freq":1373.0},
+                //assumes a max possible frequency of 100,000 GHz
+                //data:{
+                //    'receiver':getUrlParam('receiver','all'),
+                //    'filename':getUrlParam('filename','all'),
+                //    'projid':getUrlParam('projid','all'),
+                 //   'oldest_scan_date':getUrlParam('oldest_scan_date','all'),
+                 //   'newest_scan_date':getUrlParam('newest_scan_date','all'),
+                 //   'azimuth_min':getUrlParam('azimuth_min',0),
+                 //   'azimuth_max':getUrlParam('azimuth_max',360),
+                 //   'elevation_min':getUrlParam('elevation_min',0),
+                 //   'elevation_max':getUrlParam('elevation_max',90),
+                //    'frequency_min':getUrlParam('frequency_min',0),
+                //    'frequency_max':getUrlParam('frequency_max',100000000),
+                //},
+                data:{
+                    'url': url,
+                },
+
+
+                //data:{"least_freq":1372.0, "greatest_freq":1373.0},
                 // the data you submit with your request (in our case, we'd want to submit our frequency ranges and such to download)
     
                 success: function(response) {

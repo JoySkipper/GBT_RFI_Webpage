@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import MasterRfiCatalog
 from .models import MasterRfiFlaggedCatalog
+from .models import CleanDev
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from decimal import Decimal
@@ -18,6 +19,8 @@ from django.http import StreamingHttpResponse, HttpResponse
 import csv
 import time
 from listings.choices import receiver_choices
+from listings.filter_sorter import filter_sorter
+from urllib.parse import urlparse,parse_qs
 # Create your views here.
 
 import cProfile
@@ -37,13 +40,17 @@ class Echo:
 
 
 def index(request):
+
+    """
+    if 'Azimuth_Min' in request.GET:
+        Azimuth_Min = request.GET['Azimuth_Min']
+        if Azimuth_Min:
+            queryset_list = MasterRfiCatalog.objects.filter(azimuth_deg_field__gt=str(Azimuth_Min)).values()
+    """
     context = {
         'receiver_choices':receiver_choices,
     }
 
-    #max frequency value
-    greatest_freq = 1373.0
-    least_freq = 1372.0
     #range and steps needed if we end up doing the interactive graph. 
     #range_freqs = float(greatest_freq - float(least_freq))
     #step_value = range_freqs/20.0
@@ -97,16 +104,37 @@ def validate_username(request):
 
 @csrf_exempt
 def django_save_me(request):
-    least_freq = request.GET['least_freq']
-    greatest_freq = request.GET['greatest_freq']
-    #Calls all values from the database in a given frequency range ---make this the data ajax request
-    listings = MasterRfiCatalog.objects.filter(frequency_mhz__gt=str(least_freq)).filter(frequency_mhz__lt=str(greatest_freq)).values()
-    #check up on distinct()
+    # Pulling the url response from index.html via the ajax request in listings.html
+    url = request.GET['url']
+    # Parsing the url into something human-readable
+    url_query = urlparse(url).query
+    # Turning that url into a dictionary
+    url_dict = parse_qs(url_query,keep_blank_values=False)
+    # One of the url values is just from the "submit" button, so we get rid of that useless form here:
+    url_dict.pop("Submit",None)
+    # By default, url_dict is a list of values. But we only take one value for each question, so we're limiting this to one value per question 
+    # And elimintating the list inside: 
+    new_url_dict = {}
+    for key,value in url_dict.items():
+        if len(value) == 1:
+            new_url_dict[key] = value[0]
+        else: 
+            raise AttributeError("Multiple values not accepted for each query type.")    
+    url_dict = new_url_dict
+    print(url_dict)
+
+    # Initializing a queryset of the database table
+    queryset = CleanDev.objects.all()
+    # Filtering that queryset by all the values given in the url request
+    filtered_queryset = filter_sorter(queryset,url_dict).getQueryset()
+    filtered_queryset = filtered_queryset.values()
+
+    
     #Create the pseudo buffer to write to so we're not storing anything large while we load the file
     pseudo_buffer = Echo()
     writer = csv.writer(pseudo_buffer)
     #Stream the data from the database to a file
-    response = StreamingHttpResponse((writer.writerow([str(single_list['frequency_mhz']),str(single_list['intensity_jy'])]) for single_list in listings),
+    response = StreamingHttpResponse((writer.writerow([str(single_list['frequency_mhz']),str(single_list['intensity_jy'])]) for single_list in filtered_queryset),
                                       content_type="text/csv")
     #json_data = { "frequency":[single_list['frequency_mhz'] for single list in listings], "intensity":[single_list["intensity_jy"] for single_list in listings]}
     #Create the response as the file
