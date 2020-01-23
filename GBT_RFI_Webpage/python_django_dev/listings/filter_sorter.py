@@ -36,26 +36,26 @@ class filter_sorter:
         #oldest_scan_month = oldest_scan_date[1]
         #oldest_scan_day = oldest_scan_date[2]
         #self.queryset = self.queryset.filter(date__gt = datetime.date(oldest_scan_year,oldest_scan_month,oldest_scan_day))
-        self.queryset = self.queryset.filter(date__gt = oldest_scan_date)
+        self.queryset = self.queryset.filter(date__gte = oldest_scan_date)
     def setDateMax(self, newest_scan_date):
         #newest_scan_date.split("_")
         #newest_scan_year = newest_scan_date[0]
         #newest_scan_month = newest_scan_date[1]
         #newest_scan_day = newest_scan_date[2]
         #self.queryset = self.queryset.filter(date__lt = datetime.date(newest_scan_year,newest_scan_month,newest_scan_day))
-        self.queryset = self.queryset.filter(date__lt = newest_scan_date)
+        self.queryset = self.queryset.filter(date__lte = newest_scan_date)
     def setAzimuthMin(self, azimuth_min):
-        self.queryset = self.queryset.filter(azimuth_deg__gt = azimuth_min)
+        self.queryset = self.queryset.filter(azimuth_deg__gte = azimuth_min)
     def setAzimuthMax(self, azimuth_max):
-        self.queryset = self.queryset.filter(azimuth_deg__lt = azimuth_max)
+        self.queryset = self.queryset.filter(azimuth_deg__lte = azimuth_max)
     def setElevationMin(self, elevation_min):
-        self.queryset = self.queryset.filter(elevation_deg__gt = elevation_min)
+        self.queryset = self.queryset.filter(elevation_deg__gte = elevation_min)
     def setElevationMax(self, elevation_max):
-        self.queryset = self.queryset.filter(elevation_deg__lt = elevation_max)
+        self.queryset = self.queryset.filter(elevation_deg__lte = elevation_max)
     def setFreqMin(self, frequency_min):
-        self.queryset = self.queryset.filter(frequency_mhz__gt = frequency_min)
+        self.queryset = self.queryset.filter(frequency_mhz__gte = frequency_min)
     def setFreqMax(self, frequency_max):
-        self.queryset = self.queryset.filter(frequency_mhz__lt = frequency_max)
+        self.queryset = self.queryset.filter(frequency_mhz__lte = frequency_max)
 
     def getQueryset(self):
         return self.queryset
