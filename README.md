@@ -6,6 +6,8 @@ Contains the Django Python code used to maintain and operate the GBT RFI public-
 
 This code is still in development. There is a video demo of the prototype, which displays the eventual functionality, but the code has not been released yet for general use. 
 
+Namely, I'm still trying to figure out the best way to organize the folders, given the required structure of Django, in a way that still makes sense to those who are not very familiar with Django. 
+
 ## User Instructions:
 
 Currently, we have one search page, which searches the whole database. The web page is currently in production to split this into a quick search page and an advanced search page, so that common searches can be streamlined. The single search page is the one in the video demo.
