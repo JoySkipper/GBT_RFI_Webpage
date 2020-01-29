@@ -17,5 +17,5 @@ This code is still in development. There is a video demo of the prototype, which
 
 Our main concern right now is speed optimization. Additionally, we're still trying to figure out the best way to organize the folders, given the required structure of Django, in a way that still makes sense to those who are not very familiar with Django. 
 
-[Documentation](docs/how_to_run.md)
+### [See Documentation](docs/how_to_run.md)
 
