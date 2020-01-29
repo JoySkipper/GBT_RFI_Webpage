@@ -14,6 +14,41 @@ Currently, we have one search page, which searches the whole database. The web p
 On the main webpage, you will eventually be able to search for a given RFI observation given your choice of receiver. If you'd like a broader range of choices, you will have the option to click "advanced options" in the lower right-hand corner. Then you can choose among all the options currently available. This will do a broad general search of the entire SQL database, so it will take some time.
 
 
-## Developer Instructions: 
+## Installation: 
 
-This webpage relies heavily on Django for Python functionality. It accesses the SQL database at GBO via mySQL. The search page is under GBT_RFI_Webpage/python_django_dev/templates/pages/index.html. The page displaying the search results is under GBT_RFI_Webpage/python_django_dev/templates/listings/listings.html. The advanced options page has not yet been created. This page will be updated when it is made. 
+This webpage relies heavily on Django for Python functionality. It accesses the SQL database at GBO via mySQL. We strongly recommend familiarizing yourself with Django before continuing: 
+
+https://www.djangoproject.com/start/
+
+### Requirements: 
+
+* Python 3.5+ (setup.py coming soon!)
+    - numpy
+    - matplotlib.pyplot 
+    - decimal
+    - json
+    - scipy 
+    - pylab
+    - pandas
+    - django 2.2+
+    - pandas
+* Access to either the GBO RFI database (if a GBO employee) or access to another database to which you'd like similar functionality
+
+First you will need to clone the repository locally: 
+
+```
+git clone https://github.com/JoySkipper/GBT_RFI_Webpage
+```
+
+You'll then need to rename settings_secure.py to settings.py and fill out the information indicated in the top: the security key, allowed hosts, and database information.
+
+At this point, you should be able to locally run the server from the python_django_dev directory: 
+
+```
+python manage.py runserver
+```
+
+If you have any issues or questions, please email jskipper@nrao.edu.
+
+
+
