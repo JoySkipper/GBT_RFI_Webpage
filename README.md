@@ -10,7 +10,7 @@ https://youtu.be/Fkr3nl05R9Y
 
 This code is still in development. There is a video demo of the prototype, which displays the general functionality, but the code has not been published yet for general use. 
 
-Namely, I'm still trying to figure out the best way to organize the folders, given the required structure of Django, in a way that still makes sense to those who are not very familiar with Django. 
+Our main concern right now is speed optimization. Additionally, we're still trying to figure out the best way to organize the folders, given the required structure of Django, in a way that still makes sense to those who are not very familiar with Django. 
 
 ## User Instructions:
 
