@@ -9,6 +9,9 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
+# IF YOU HAVE CLONED THIS REPO: 
+# You will need to fill out the security key, allowed hosts, and database information before launching your server.
+
 
 from django.db.backends.mysql.base import DatabaseWrapper
 DatabaseWrapper.data_types['DateTimeField'] = 'datetime' # fix for MySQL 5.5
@@ -23,12 +26,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#8hl_bw7-c-wjn+ah*q^#tbcc#qtm!q73dplm(s9x7%xv+fj)k'
+SECRET_KEY = 'fill_out'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['192.33.116.22','127.0.0.1']
+ALLOWED_HOSTS = 'include_database_IP'
 
 # Application definition
 
@@ -80,10 +83,10 @@ WSGI_APPLICATION = 'btre.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'jskipper',
-        'USER': 'jskipper',
-        'PASSWORD':'password',
-        'HOST':'192.33.116.22'
+        'NAME': 'your_database_name'
+        'USER': 'your_username'
+        'PASSWORD':'your_password',
+        'HOST': 'host_ip'
         
         
     }
