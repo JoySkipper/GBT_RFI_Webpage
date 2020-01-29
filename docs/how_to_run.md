@@ -1,20 +1,10 @@
 ## GBT_RFI_Webpage
 
-GBT RFI Webpage is the public-facing webpage containing access to the Green Bank Observatory Radio Frequency Interference database for the Green Bank Telescope. 
-
-<p align="center">
-<img src="images/home_page.jpg" width="290">
-<img src="images/loading_screen.jpg" width="290">
-<img src="images/received_data.jpg" width="290">
-</p>
-
-## Video Demo: 
-We have a video demo of the Webpage here: 
-https://youtu.be/Fkr3nl05R9Y
+Welcome to the GBT RFI Webpage documentation. Here we cover instructions on a self-hosted webpage.  
 
 ### Note: 
 
-This code is still in development. There is a video demo of the prototype, which displays the eventual functionality, but the web page has not been released yet for general use. 
+This code is still in development. There is a [video demo](https://youtu.be/Fkr3nl05R9Y) of the prototype, which displays the eventual functionality, but the web page has not been released yet for general use. 
 
 
 Currently, we have one search page, which searches the whole database. The web page is currently in production to split this into a quick search page and an advanced search page, so that common searches can be streamlined. The single search page is the one in the video demo.
