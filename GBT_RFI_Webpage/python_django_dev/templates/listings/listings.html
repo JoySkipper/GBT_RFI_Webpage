@@ -5,6 +5,7 @@
 {% block content %}
 
 <head>
+    <!-- Loading widget while the page accesses the database -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
     .loader {
@@ -30,7 +31,7 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-
+    /* Hide until it is called by the fxn */
     .hide-loader{
         display:none;
     }
@@ -55,6 +56,7 @@
 
 <div class="loader" id="myloader"></div>
 
+<!-- Creating the different texts based on the loading situation, and then hiding them to wait to be called -->
 <div id="loading_text" style="display:none; text-align: center;">
     <br><br>
     <h3>Getting your data from the database. Please wait, this may take some time.</h3>
@@ -73,6 +75,7 @@
 
 <br><br><br><br><br><br>
 
+<!-- Create box for interactive graphs of data. Empty for now. -->
 <div id="tester" style="width:800px;height:600px;border: 5px solid purple; padding: 100px; margin:auto; background-color: lightgrey;text-align:center;">
     <br><br><br><br><br><h3>Interactive graphs of data coming soon!</h3>
 </div>
@@ -80,6 +83,8 @@
 
 
   <script>
+
+        /* Creating the necessary variables. Download on click. Get variables from the url */
         var Download = 
         {
             click : function(node) {
@@ -130,12 +135,12 @@
 <script> src='js/node_modules/url-parse/dist/url-parse.min.js' </script>
 
   <script>
-        //var return_first = function(){submit_ajax()};
         window.onload = function(){submit_ajax()};
         // Once the page has loaded you want to submit the ajax script
     
     
         function submit_ajax(){
+            // Show the loading icon
             $('#myloader').show();
             $('#loading_text').show();  
             console.log(window.location.href)
@@ -148,25 +153,9 @@
                 type: "GET",
                 //getting data, defines the http request type
                 //assumes a max possible frequency of 100,000 GHz
-                //data:{
-                //    'receiver':getUrlParam('receiver','all'),
-                //    'filename':getUrlParam('filename','all'),
-                //    'projid':getUrlParam('projid','all'),
-                 //   'oldest_scan_date':getUrlParam('oldest_scan_date','all'),
-                 //   'newest_scan_date':getUrlParam('newest_scan_date','all'),
-                 //   'azimuth_min':getUrlParam('azimuth_min',0),
-                 //   'azimuth_max':getUrlParam('azimuth_max',360),
-                 //   'elevation_min':getUrlParam('elevation_min',0),
-                 //   'elevation_max':getUrlParam('elevation_max',90),
-                //    'frequency_min':getUrlParam('frequency_min',0),
-                //    'frequency_max':getUrlParam('frequency_max',100000000),
-                //},
                 data:{
                     'url': url,
                 },
-
-
-                //data:{"least_freq":1372.0, "greatest_freq":1373.0},
                 // the data you submit with your request (in our case, we'd want to submit our frequency ranges and such to download)
     
                 success: function(response) {
@@ -175,7 +164,7 @@
                     $('#return_text').show();                
                     Download.save(response,"RFI_data.txt")
                     return response;
-                    // on success, we will download the data
+                    // on success, we will download the data and show successful return text
                 },
     
                 error : function(xhr,errmsg,err){
@@ -186,10 +175,9 @@
                 }
                 
             }); 
-            //return response;
+            
         };    
         
-        //console.log(response)
         
         </script>
 

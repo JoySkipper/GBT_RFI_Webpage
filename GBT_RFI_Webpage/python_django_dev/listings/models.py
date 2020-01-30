@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# Create your Django models here.
 
 class MasterRfiCatalog(models.Model):
     data_ID = models.IntegerField(primary_key=True)

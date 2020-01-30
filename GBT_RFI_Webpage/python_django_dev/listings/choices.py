@@ -1,3 +1,12 @@
+"""
+..module:: choices.py
+    :synopsis: Dictionary of all choices of receivers on the search page. 
+If you wish to add a receiver, the key indicates what you want the user to see in the 
+search options. The value indicates the universal name of the receiver within all GBO scripts
+..moduleauthor:: Joy Skipper <jskipper@nrao.edu>
+Code Origin: https://github.com/JoySkipper/GBT_RFI_Webpage
+"""
+
 receiver_choices = {
 "PF1": 'Prime Focus 1',
 "PF2": 'Prime Focus 2',

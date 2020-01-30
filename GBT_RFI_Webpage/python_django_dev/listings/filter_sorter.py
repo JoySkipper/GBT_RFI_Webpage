@@ -1,4 +1,10 @@
-
+"""
+..module:: filter_sorter.py
+    :synopsis: Takes in the Django queryset and user specified options, then filters and sorts
+    based on that request
+..moduleauthor:: JoySkipper <jskipper@nrao.edu>
+Code Origin: https://github.com/JoySkipper/GBT_RFI_Webpage
+"""
 
 class filter_sorter: 
 
