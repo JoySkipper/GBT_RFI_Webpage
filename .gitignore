@@ -106,3 +106,6 @@ venv.bak/
 # Django
 /static
 /media
+
+# Security Issues, don't want to upload settings with your username, password, etc. 
+python_django_dev/btre/settings.py
