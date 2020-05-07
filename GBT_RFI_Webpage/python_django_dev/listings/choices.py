@@ -8,12 +8,7 @@ Code Origin: https://github.com/JoySkipper/GBT_RFI_Webpage
 """
 
 receiver_choices = {
-"PF1": 'Prime Focus 1',
-"PF2": 'Prime Focus 2',
-"Rcvr_342": 'Rcvr_342',
-"Rcvr_450":'Rcvr_450',
-"Rcvr_600":'Rcvr_600',
-"Rcvr_800":'Rcvr_800',
+"Prime Focus":'Prime_Focus',
 "L_band":'Rcvr1_2',
 "S_band":'Rcvr2_3',
 "C_band":'Rcvr4_6',
@@ -23,7 +18,7 @@ receiver_choices = {
 "Ka_band":'Rcvr26_40',
 "Q_band":'Rcvr40_52',
 "W_band":'Rcvr68_92',
-"Argus":'Rcvr68_92',
+"Argus":'RcvrArray75_115',
 "MUSTANG":'RcvrMBA1_2'
 }
 
