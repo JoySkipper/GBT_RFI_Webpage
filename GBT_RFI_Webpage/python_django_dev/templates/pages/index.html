@@ -21,9 +21,9 @@
             <form action="{% url 'listings' %}" method="GET">
               <!-- Search by receiver -->
               <div class="form-row">
-                    <label style="text-align: left;">Search by Receiver</label>
-                    <select id='receiver' name="receiver" class="form-control">
-                      <option selected="true" disabled="disabled">Receiver (Default All)</option>
+                    <label style="text-align: left;">Receiver (Required)</label>
+                    <select id='receiver' name="receiver" class="form-control" required>
+                      <option selected="true" disabled="disabled">Receiver Name</option>
                         {% for rcvr_key,rcvr_value in receiver_choices.items %}
                             <option value="{{ rcvr_value }}">{{ rcvr_key }}</option>
                         {% endfor %}
@@ -31,12 +31,12 @@
                   </div>
                   <!-- Search by filename -->
                   <div class="col-md-6 mb-3">
-                        <label style="text-align:left;">Search by Filename</label>
+                        <label style="text-align:left;">Filename</label>
                         <input type="text" id="filename" name="filename" placeholder="Any Filename">
                        </div>
                        <!-- Search by Project ID-->
                        <div class="form-row">
-                            <label style="text-align:left;">Search by Project ID</label>
+                            <label style="text-align:left;">Project ID</label>
                             <input type="text" id="projid" name="projid" placeholder="Any Project">
                            </div>
                 <!-- Search by oldest and newest scan date: -->
@@ -49,32 +49,18 @@
                   <label>Newest Scan Date</label>
                   <input type="date" id='newest_scan_date' name="newest_scan_date" class="form-control">
                 </div>
-                <br><br><br><br>
-  
-                <!-- Search by Azimuth -->
+
                 <div class="col-md-4 mb-3" style="float:left;">
-                    <label >Azimuth Min (deg)</label>
-                    <input type="number" id="azimuth_min" name="azimuth_min" min="0" max="360" >
+                <br>
+                <input type='checkbox' id='latest_projid' name='latest_projid' value='latest_projid' style='width: 30px;'>
                 </div>
 
                 <div class="col-md-4 mb-3" style="float:left;">
-                        <label >Azimuth Max (deg)</label>
-                        <input type="number" id="azimuth_max" name="azimuth_max" min="0" max="360">
-                    </div>
+                <br>
+                <label>Choose Latest Project Only</label>
+                </div>
 
                 <br><br><br><br>
-                <!-- Search by azimuth -->
-                <div class="col-md-4 mb-3" style="float:left;">
-                        <label >Elevation Min (deg)</label>
-                        <input type="number" id="elevation_min" name="elevation_min" min="0" max="90" >
-                    </div>
-    
-                    <div class="col-md-4 mb-3" style="float:left;">
-                            <label >Elevation Max (deg)</label>
-                            <input type="number" id="elevation_max" name="elevation_max" min="0" max="90">
-                        </div>
-
-                        <br><br><br><br>
 
                 <!-- Search by Frequency -->
                 <div class="col-md-4 mb-3" style="float:left;">
@@ -89,14 +75,6 @@
               </div>
               <br><br><br><br>
 
-              <h2 style='text-align:center'>Choose Files to Download:</h2>
-
-
-  <!--<input type="checkbox" name="file1" value="fits" > .fits file &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     -->    
-  <input type="checkbox" name="file2" value="txt" > .txt file <br><br>
-  <input type="checkbox" name="file2" value="txt" > .csv file <br><br>
-
-  <h3 style='text-align:center'>More Download Options Coming Soon!</h3>
  <!--<input type="checkbox" name="file3" value="mean" > Mean  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="checkbox" name="file4" value="median" > Median  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="checkbox" name="file5" value="mode" > Mode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
