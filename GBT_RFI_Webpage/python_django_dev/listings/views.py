@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from .models import MasterRfiCatalog
 from .models import MasterRfiFlaggedCatalog
-from .models import CleanDev
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from decimal import Decimal
@@ -73,6 +72,8 @@ def django_save_me(request):
     url_dict = parse_qs(url_query,keep_blank_values=False)
     # One of the url values is just from the "submit" button, so we get rid of that useless form here:
     url_dict.pop("Submit",None)
+    if url_dict['latest_projid']:
+        print("wants the latest project")
     # By default, url_dict is a list of values. But we only take one value for each question, so we're limiting this to one value per question 
     # And elimintating the list inside: 
     new_url_dict = {}
@@ -85,7 +86,7 @@ def django_save_me(request):
     print(url_dict)
 
     # Initializing a queryset of the database table
-    queryset = CleanDev.objects.all()
+    queryset = MasterRfiCatalog.objects.all()
     # Filtering that queryset by all the values given in the url request
     filtered_queryset = filter_sorter(queryset,url_dict).getQueryset()
     filtered_queryset = filtered_queryset.values()
