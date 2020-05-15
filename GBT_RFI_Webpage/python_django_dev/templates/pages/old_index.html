@@ -1,0 +1,115 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block content %}
+
+ <!-- Showcase -->
+ <section id="showcase">
+
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+
+
+        <div class = "wp-block-editor-blocks-wrapper alignfull" style="padding-top:50px; padding-bottom:50px; margin-top:0px; margin-bottom=50px; background-image:url(https://greenbankobservatory.org/wp-content/uploads/2016/05/telescope.png);">
+            <h1 class="hero__heading" style="color:#eeeeee">RFI Scans and Known Sources</h1>
+            <h2 class="lead" style="color:#eeeeee">by Joy Skipper (jskipper@nrao.edu)</h2>
+            </div>
+          <br><br>
+          <div class="search">
+            <form action="{% url 'listings' %}" method="GET">
+              <!-- Search by receiver -->
+              <div class="form-row">
+                    <label style="text-align: left;">Search by Receiver</label>
+                    <select id='receiver' name="receiver" class="form-control">
+                      <option selected="true" disabled="disabled">Receiver (Default All)</option>
+                        {% for rcvr_key,rcvr_value in receiver_choices.items %}
+                            <option value="{{ rcvr_value }}">{{ rcvr_key }}</option>
+                        {% endfor %}
+                    </select>
+                  </div>
+                  <!-- Search by filename -->
+                  <div class="col-md-6 mb-3">
+                        <label style="text-align:left;">Search by Filename</label>
+                        <input type="text" id="filename" name="filename" placeholder="Any Filename">
+                       </div>
+                       <!-- Search by Project ID-->
+                       <div class="form-row">
+                            <label style="text-align:left;">Search by Project ID</label>
+                            <input type="text" id="projid" name="projid" placeholder="Any Project">
+                           </div>
+                <!-- Search by oldest and newest scan date: -->
+                <div class="col-md-4 mb-3" style="float:left;">
+                  <label>Oldest Scan Date</label>
+                  <input type="date" id="oldest_scan_date" name="oldest_scan_date" class="form-control" style="width:200px;">
+                </div>
+
+                <div class="col-md-4 mb-3" style="float:left;">
+                  <label>Newest Scan Date</label>
+                  <input type="date" id='newest_scan_date' name="newest_scan_date" class="form-control">
+                </div>
+                <br><br><br><br>
+  
+                <!-- Search by Azimuth -->
+                <div class="col-md-4 mb-3" style="float:left;">
+                    <label >Azimuth Min (deg)</label>
+                    <input type="number" id="azimuth_min" name="azimuth_min" min="0" max="360" >
+                </div>
+
+                <div class="col-md-4 mb-3" style="float:left;">
+                        <label >Azimuth Max (deg)</label>
+                        <input type="number" id="azimuth_max" name="azimuth_max" min="0" max="360">
+                    </div>
+
+                <br><br><br><br>
+                <!-- Search by azimuth -->
+                <div class="col-md-4 mb-3" style="float:left;">
+                        <label >Elevation Min (deg)</label>
+                        <input type="number" id="elevation_min" name="elevation_min" min="0" max="90" >
+                    </div>
+    
+                    <div class="col-md-4 mb-3" style="float:left;">
+                            <label >Elevation Max (deg)</label>
+                            <input type="number" id="elevation_max" name="elevation_max" min="0" max="90">
+                        </div>
+
+                        <br><br><br><br>
+
+                <!-- Search by Frequency -->
+                <div class="col-md-4 mb-3" style="float:left;">
+                    <label >Frequency Min (MHz)</label>
+                    <input type="number" id="frequency_min" name="frequency_min" min="0" >
+                </div>
+    
+                <div class="col-md-4 mb-3" style="float:left;">
+                    <label >Frequency Max (MHz)</label>
+                    <input type="number" id="frequency_max" name="frequency_max" min="0">
+                </div>
+              </div>
+              <br><br><br><br>
+
+              <h2 style='text-align:center'>Choose Files to Download:</h2>
+
+
+  <!--<input type="checkbox" name="file1" value="fits" > .fits file &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     -->    
+  <input type="checkbox" name="file2" value="txt" > .txt file <br><br>
+  <input type="checkbox" name="file2" value="txt" > .csv file <br><br>
+
+  <h3 style='text-align:center'>More Download Options Coming Soon!</h3>
+ <!--<input type="checkbox" name="file3" value="mean" > Mean  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="checkbox" name="file4" value="median" > Median  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="checkbox" name="file5" value="mode" > Mode &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <input type="checkbox" name="file6" value="individual" > Individual files <br><br>
+  <button class="button" style="position:relative;top:50%;left:50%;margin: -20px -75px; ">Download Data</button>-->
+  <input type="submit" value="Get Data" style="background-color: #8557A3; border-color: #8557A3; color: white;"
+  name="Submit" id="frm1_submit" />             
+            </form>
+            <!--<button class="button" type="Submit">Get Data</button>-->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
