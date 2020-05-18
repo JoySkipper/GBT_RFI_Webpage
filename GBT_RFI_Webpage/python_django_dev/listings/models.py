@@ -5,9 +5,9 @@ from django.db import models
 class MasterRfiCatalog(models.Model):
     feed = models.IntegerField(blank=True, null=True)
     frontend = models.CharField(max_length=15, blank=True, null=True)
-    azimuth_deg_field = models.DecimalField(db_column='azimuth (deg)', max_digits=8, decimal_places=5, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    azimuth_deg_field = models.DecimalField(db_column='azimuth_deg', max_digits=8, decimal_places=5, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
     projid = models.CharField(max_length=50, blank=True, null=True)
-    resolution_mhz_field = models.DecimalField(db_column='resolution (MHz)', max_digits=11, decimal_places=10, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    resolution_mhz_field = models.DecimalField(db_column='resolution_mhz', max_digits=11, decimal_places=10, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
     window = models.IntegerField(db_column='Window', blank=True, null=True)  # Field name made lowercase.
     exposure = models.DecimalField(max_digits=8, decimal_places=5, blank=True, null=True)
     utc_hrs = models.DecimalField(max_digits=8, decimal_places=6, blank=True, null=True)
@@ -26,7 +26,7 @@ class MasterRfiCatalog(models.Model):
     units = models.CharField(max_length=2, blank=True, null=True)
     intensity_jy = models.DecimalField(db_column='Intensity_Jy', max_digits=15, decimal_places=6, blank=True, null=True)  # Field name made lowercase.
     scan_number = models.IntegerField(blank=True, null=True)
-    elevation_deg_field = models.DecimalField(db_column='elevation (deg)', max_digits=8, decimal_places=6, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    elevation_deg_field = models.DecimalField(db_column='elevation_deg', max_digits=8, decimal_places=6, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
     def __str__(self):
         return self.filename
     class Meta:
@@ -42,9 +42,9 @@ class MasterRfiCatalog(models.Model):
 class MasterRfiFlaggedCatalog(models.Model):
     feed = models.IntegerField(blank=True, null=True)
     frontend = models.CharField(max_length=15, blank=True, null=True)
-    azimuth_deg_field = models.DecimalField(db_column='azimuth (deg)', max_digits=8, decimal_places=5, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    azimuth_deg_field = models.DecimalField(db_column='azimuth_deg', max_digits=8, decimal_places=5, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
     projid = models.CharField(max_length=50, blank=True, null=True)
-    resolution_mhz_field = models.DecimalField(db_column='resolution (MHz)', max_digits=11, decimal_places=10, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    resolution_mhz_field = models.DecimalField(db_column='resolution_mhz', max_digits=11, decimal_places=10, blank=True, null=True)  # Field name made lowercase. Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
     window = models.IntegerField(db_column='Window', blank=True, null=True)  # Field name made lowercase.
     exposure = models.DecimalField(max_digits=8, decimal_places=5, blank=True, null=True)
     utc_hrs = models.DecimalField(max_digits=8, decimal_places=6, blank=True, null=True)
@@ -63,7 +63,7 @@ class MasterRfiFlaggedCatalog(models.Model):
     units = models.CharField(max_length=2, blank=True, null=True)
     intensity_jy = models.DecimalField(db_column='Intensity_Jy', max_digits=15, decimal_places=6, blank=True, null=True)  # Field name made lowercase.
     scan_number = models.IntegerField(blank=True, null=True)
-    elevation_deg_field = models.DecimalField(db_column='elevation (deg)', max_digits=8, decimal_places=6, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
+    elevation_deg_field = models.DecimalField(db_column='elevation_deg', max_digits=8, decimal_places=6, blank=True, null=True)  # Field renamed to remove unsuitable characters. Field renamed because it ended with '_'.
     def __str__(self):
         return self.filename
 
