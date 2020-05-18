@@ -71,6 +71,16 @@ class MasterRfiFlaggedCatalog(models.Model):
         managed = False
         db_table = 'Master_RFI_Flagged_Catalog'
 
+class Prime_Focus(models.Model):
+    frequency_mhz = models.DecimalField(db_column='Frequency_MHz', max_digits=12, decimal_places=4, blank=True,null=True)  # Field name made lowercase.  
+    mjd = models.DecimalField(max_digits=8, decimal_places=3, blank=True,null=True) 
+
+    class Meta:
+        unique_togather = (('frequency_mhz','mjd'),)
+
+    class Meta:
+        managed = False
+        db_table = 'Prime_Focus'
 
 class Rcvr1_2(models.Model):
     frequency_mhz = models.DecimalField(db_column='Frequency_MHz', max_digits=12, decimal_places=4, blank=True,null=True)  # Field name made lowercase.  

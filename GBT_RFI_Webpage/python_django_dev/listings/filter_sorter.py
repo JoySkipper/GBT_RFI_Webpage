@@ -5,8 +5,7 @@
 ..moduleauthor:: JoySkipper <jskipper@nrao.edu>
 Code Origin: https://github.com/JoySkipper/GBT_RFI_Webpage
 """
-class noReceiver():
-    pass
+from .models import Prime_Focus,Rcvr1_2,Rcvr2_3,Rcvr4_6,Rcvr8_10,Rcvr12_18,Rcvr26_40,Rcvr40_52,Rcvr68_92,RcvrArray18_26,RcvrArray75_115,RcvrMBA1_2
 
 class filter_sorter: 
 
@@ -21,10 +20,7 @@ class filter_sorter:
             'newest_scan_date' : self.setDateMax, 
             'frequency_min' : self.setFreqMin, 
             'frequency_max' : self.setFreqMax, 
-            'latest_projid' : self.latest_projid,
         }
-        if 'receiver' not in userOptions:
-            raise noReceiver
         #Set all options that were given to us: 
         for option in userOptions: 
             setterFunction = self.OperationSetterFunctionLibrary[option]
@@ -45,6 +41,35 @@ class filter_sorter:
     def setFreqMax(self, frequency_max):
         self.queryset = self.queryset.filter(frequency_mhz__lte = frequency_max)
 
+    def getQueryset(self):
+        return self.queryset
+        
+class determine_queryset:
+    def __init__(self,receiver):
+        if receiver == 'Prime_Focus':
+            self.queryset = Prime_Focus.objects.all()
+        elif receiver == 'Rcvr1_2':
+            self.queryset = Rcvr1_2.objects.all()
+        elif receiver == 'Rcvr2_3':
+            self.queryset = Rcvr2_3.objects.all()
+        elif receiver == 'Rcvr4_6':
+            self.queryset = Rcvr4_6.objects.all()
+        elif receiver == 'Rcvr8_10':
+            self.queryset = Rcvr8_10.objects.all()
+        elif receiver == 'Rcvr12_18':
+            self.queryset = Rcvr12_18.objects.all()
+        elif receiver == 'Rcvr26_40':
+            self.queryset = Rcvr26_40.objects.all()
+        elif receiver == 'Rcvr40_52':
+            self.queryset = Rcvr40_52.objects.all()
+        if receiver == 'Rcvr68_92':
+            self.queryset = Rcvr68_92.objects.all()
+        elif receiver == 'RcvrArray18_26':
+            self.queryset = RcvrArray18_26.objects.all()
+        elif receiver == 'RcvrArray75_115':
+            self.queryset = RcvrArray75_115.objects.all()
+        elif receiver == 'RcvrMBA1_2':
+            self.queryset = RcvrMBA1_2.objects.all()
     def getQueryset(self):
         return self.queryset
         
