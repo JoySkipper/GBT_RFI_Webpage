@@ -76,8 +76,7 @@ def django_save_me(request):
     url_dict = parse_qs(url_query,keep_blank_values=False)
     # One of the url values is just from the "submit" button, so we get rid of that useless form here:
     url_dict.pop("Submit",None)
-    if url_dict['latest_projid']:
-        print("wants the latest project")
+        
     # By default, url_dict is a list of values. But we only take one value for each question, so we're limiting this to one value per question 
     # And elimintating the list inside: 
     new_url_dict = {}
@@ -87,8 +86,12 @@ def django_save_me(request):
         else: 
             raise AttributeError("Multiple values not accepted for each query type.")    
     url_dict = new_url_dict
-    print(url_dict)
 
+    if 'latest_projid' in url_dict:
+        filtered_queryset = latest_projects.objects.filter(frontend = url_dict['receiver']).values()[0]
+        projid = filtered_queryset['projid']
+        final_query = 'SELECT * from '+str(projid)
+    else:
         # Initializing a queryset of the database table
         queryset = determine_queryset(url_dict['receiver']).getQueryset()
         # If we're not looking for latest project, then we don't need the receiver key anymore as we've
