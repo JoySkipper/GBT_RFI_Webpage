@@ -17,10 +17,12 @@
             //Set the disabled property to FALSE and enable the button.
             document.getElementById("oldest_scan_date").disabled = true;
             document.getElementById("newest_scan_date").disabled = true;
+            document.getElementById("projid").disabled = true;
         } else{
             //Otherwise, disable the submit button.
             document.getElementById("oldest_scan_date").disabled = false;
             document.getElementById("newest_scan_date").disabled = false;
+            document.getElementById("projid").disabled = false;
         }
     }
 </script>
@@ -50,7 +52,7 @@
                        <!-- Search by Project ID-->
                        <div class="form-row">
                             <label style="text-align:left;">Project ID</label>
-                            <input type="text" id="projid" name="projid" placeholder="Any Project">
+                            <input type="text" id="projid" name="projid" placeholder="Any Project" disabled>
                            </div>
                 <!-- Search by oldest and newest scan date: -->
                 <div class="col-md-4 mb-3" style="float:left;">
