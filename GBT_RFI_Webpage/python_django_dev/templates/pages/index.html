@@ -7,6 +7,24 @@
  <!-- Showcase -->
  <section id="showcase">
 
+<script>
+    JavaScript
+    //JavaScript function that enables or disables the date buttons depending
+    //on whether the latest project id checkbox has been ticked or not.
+    function terms_changed(termsCheckBox){
+        //If the checkbox has been checked
+        if(termsCheckBox.checked){
+            //Set the disabled property to FALSE and enable the button.
+            document.getElementById("oldest_scan_date").disabled = true;
+            document.getElementById("newest_scan_date").disabled = true;
+        } else{
+            //Otherwise, disable the submit button.
+            document.getElementById("oldest_scan_date").disabled = false;
+            document.getElementById("newest_scan_date").disabled = false;
+        }
+    }
+</script>
+
     <div class="container text-center">
       <div class="home-search p-5">
         <div class="overlay p-5">
@@ -42,17 +60,17 @@
                 <!-- Search by oldest and newest scan date: -->
                 <div class="col-md-4 mb-3" style="float:left;">
                   <label>Oldest Scan Date</label>
-                  <input type="date" id="oldest_scan_date" name="oldest_scan_date" class="form-control" style="width:200px;">
+                  <input type="date" id="oldest_scan_date" name="oldest_scan_date" class="form-control" style="width:200px;" disabled>
                 </div>
 
                 <div class="col-md-4 mb-3" style="float:left;">
                   <label>Newest Scan Date</label>
-                  <input type="date" id='newest_scan_date' name="newest_scan_date" class="form-control">
+                  <input type="date" id='newest_scan_date' name="newest_scan_date" class="form-control" disabled>
                 </div>
 
                 <div class="col-md-4 mb-3" style="float:left;">
                 <br>
-                <input type='checkbox' id='latest_projid' name='latest_projid' value='latest_projid' style='width: 30px;'>
+                <input type='checkbox' id='latest_projid' name='latest_projid' value='latest_projid' style='width: 30px;' onclick="terms_changed(this)" checked>
                 </div>
 
                 <div class="col-md-4 mb-3" style="float:left;">
