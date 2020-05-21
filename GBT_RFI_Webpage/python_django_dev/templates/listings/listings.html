@@ -70,6 +70,11 @@
     <br><br>
 </div>
 
+<div id="noresults_text" style="display:none; text-align: center;">
+    <br><br>
+    <h3>Your query returned no results. Please try broadening your search parameters.</h3>
+    <br><br>
+</div>
 
 
 
@@ -155,10 +160,14 @@
     
                 success: function(response) {
                     $('#myloader').hide();
-                    $('#loading_text').hide(); 
-                    $('#return_text').show();                
-                    Download.save(response,"RFI_data.txt")
-                    return response;
+                    $('#loading_text').hide();  
+                    if  (typeof(response) == "undefined")
+                        $('#noresults_text').show(); 
+                    else {
+                        $('#return_text').show();
+                        Download.save(response,"RFI_data.txt");
+                        return response;
+                    }
                     // on success, we will download the data and show successful return text
                 },
     
