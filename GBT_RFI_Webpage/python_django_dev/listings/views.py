@@ -31,6 +31,7 @@ import tempfile
 import mimetypes
 import gc
 import multiprocessing
+import os
 # Create your views here.
 
 import cProfile
@@ -81,7 +82,8 @@ def parse_query_chunk(final_query,temp_filename):
             #temp_file = open(temp_filename,"a+")
             #row = cursor.fetchone()
             #line_since_last_flush = 0
-
+            with open(temp_filename,'w+') as temp_file:
+                temp_file.writelines('Frequency_MHz,Intensity_Jy\n')
             for row in cursor:
                 with open(temp_filename,'a+') as temp_file:
                     txt = ''
@@ -178,7 +180,14 @@ def django_save_me(request):
             start_row += chunk_size
             print('written to '+temp_filename)
 
-
-    response = FileResponse(open(temp_filename,'rb'))
-
+    count = 0
+    with open(temp_filename,'r') as f:
+        for line in f:
+            count += 1
+            if count > 1:
+                break
+    if count > 1:
+        response = FileResponse(open(temp_filename,'rb'))
+    else:
+        response = HttpResponse('<h1>Your request received no results. Please try broadening your search parameters.</h1>',status=204)
     return response
