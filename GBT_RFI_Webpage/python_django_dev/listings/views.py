@@ -135,7 +135,6 @@ def django_save_me(request):
         print('written to '+temp_filename)
         print('is latest')
     else:
-        print('is not latest')
         # Initializing a queryset of the database table
         queryset = determine_queryset(url_dict['receiver']).getQueryset()
         # If we're not looking for latest project, then we don't need the receiver key anymore as we've
