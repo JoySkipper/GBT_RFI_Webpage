@@ -98,6 +98,16 @@ def parse_query_chunk(final_query,temp_filename):
      del cursor
      gc.collect()
 
+def get_final_query(semifinal_query,temp_filename,chunk_size):
+    with connection.cursor() as cursor:
+        cursor.execute(semifinal_query)
+        records = cursor.fetchall()
+        frequencies = tuple([str(float(item[0])) for item in records])
+        mjds = tuple([str(float(item[1])) for item in records])
+    final_query = 'SELECT frequency_mhz,intensity_jy FROM Master_RFI_Catalog WHERE Frequency_MHz in '+str(frequencies)+' AND mjd in '+str(mjds)+' ORDER BY ID'
+    return(final_query)
+
+
 @csrf_exempt
 def django_save_me(request):
     # Pulling the url response from index.html via the ajax request in listings.html
@@ -128,18 +138,19 @@ def django_save_me(request):
     if 'latest_projid' in url_dict:
         filtered_queryset = latest_projects.objects.filter(frontend = url_dict['receiver']).values()[0]
         projid = filtered_queryset['projid']
-        final_query = 'SELECT * from '+str(projid)
+        semifinal_query = 'SELECT * from '+str(projid)
         if 'frequency_min' in url_dict:
-            final_query += ' WHERE Frequency_MHz > '+str(url_dict['frequency_min'])
+            semifinal_query += ' WHERE Frequency_MHz > '+str(url_dict['frequency_min'])
         if 'frequency_max' in url_dict:
-            final_query += ' WHERE Frequency_MHz < '+str(url_dict['frequency_max'])
+            semifinal_query += ' WHERE Frequency_MHz < '+str(url_dict['frequency_max'])
             if 'frequency_min' in url_dict:
                 old = 'WHERE'
                 new = 'AND'
                 occurrence = 1
-                li = final_query.rsplit(old,occurrence)
-                final_query = new.join(li)
-        print(final_query)
+                li = semifinal_query.rsplit(old,occurrence)
+                semifinal_query = new.join(li)
+        print(semifinal_query)
+        final_query = get_final_query(semifinal_query,temp_filename,chunk_size)
         p = multiprocessing.Process(target=parse_query_chunk,args=(final_query,temp_filename))
         print('starting multiprocess')
         p.start()
