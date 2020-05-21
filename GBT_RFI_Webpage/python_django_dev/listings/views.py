@@ -16,7 +16,7 @@ import pylab
 import pandas as pd
 import numpy as np
 from django.db.models import Avg
-from django.http import StreamingHttpResponse, HttpResponse
+from django.http import StreamingHttpResponse, HttpResponse, FileResponse
 import csv
 import time
 from listings.choices import receiver_choices
@@ -24,6 +24,13 @@ from listings.filter_sorter import filter_sorter,determine_queryset
 from urllib.parse import urlparse,parse_qs
 from django.db import connection
 import zipfile
+import io
+from wsgiref.util import FileWrapper
+import random
+import tempfile
+import mimetypes
+import gc
+import multiprocessing
 # Create your views here.
 
 import cProfile
@@ -66,6 +73,29 @@ def validate_username(request):
     username_data = {"is_taken":True}
     return JsonResponse(username_data)
 
+def parse_query_chunk(final_query,temp_filename):
+     print('in parse_query chunk')
+     with connection.cursor() as cursor:
+            #writer = csv.writer(pseudo_buffer)
+            cursor.execute(final_query)
+            #temp_file = open(temp_filename,"a+")
+            #row = cursor.fetchone()
+            #line_since_last_flush = 0
+
+            for row in cursor:
+                with open(temp_filename,'a+') as temp_file:
+                    txt = ''
+                    for column in row:
+                        txt += str(float(column))+', '
+                    # Removing last column of the row
+                    txt = txt[:-2]
+                    txt += '\n'
+                    temp_file.writelines(txt)
+     print('wrote chunk to '+temp_filename)
+     cursor.close()
+     del cursor
+     gc.collect()
+
 @csrf_exempt
 def django_save_me(request):
     # Pulling the url response from index.html via the ajax request in listings.html
@@ -86,12 +116,26 @@ def django_save_me(request):
         else: 
             raise AttributeError("Multiple values not accepted for each query type.")    
     url_dict = new_url_dict
-
+    print('checking if latest projid or no')
+    start_row = 0
+    chunk_size = 1000000
+    temp_path = tempfile.gettempdir()+'/'
+    random.seed()
+    random_temp_file_bit = random.randint(0,100000)
+    temp_filename = temp_path+"temp_file_"+str(random_temp_file_bit)+".txt"
     if 'latest_projid' in url_dict:
         filtered_queryset = latest_projects.objects.filter(frontend = url_dict['receiver']).values()[0]
         projid = filtered_queryset['projid']
         final_query = 'SELECT * from '+str(projid)
+        p = multiprocessing.Process(target=parse_query_chunk,args=(final_query,temp_filename))
+        print('starting multiprocess')
+        p.start()
+        p.join()
+        gc.collect()
+        print('written to '+temp_filename)
+        print('is latest')
     else:
+        print('is not latest')
         # Initializing a queryset of the database table
         queryset = determine_queryset(url_dict['receiver']).getQueryset()
         # If we're not looking for latest project, then we don't need the receiver key anymore as we've
@@ -101,15 +145,30 @@ def django_save_me(request):
         url_dict.pop('latest_projid',None)
         # Filtering that queryset by all the values given in the url request
         filtered_queryset = filter_sorter(queryset,url_dict).getQueryset()
-        filtered_rcvr_queryset = filtered_queryset.values()
-        final_query = 'SELECT frequency_mhz,intensity_jy FROM Master_RFI_Catalog WHERE Frequency_MHz in '+str(tuple([float(single_list['frequency_mhz']) for single_list in filtered_rcvr_queryset]))+' AND mjd in '+str(tuple([float(single_list['mjd']) for single_list in filtered_rcvr_queryset]))
-    with connection.cursor() as cursor:
-        #Create the pseudo buffer to write to so we're not storing anything large while we load the file
-        pseudo_buffer = Echo()
-        writer = csv.writer(pseudo_buffer)
-        cursor.execute(final_query)
-        #Stream the data from the database to a file
-        response = StreamingHttpResponse((writer.writerow(row) for row in cursor.fetchall()),
-                                content_type="text/csv")
+        print('got filtered queryset')
+        while True:
+            filtered_rcvr_queryset = filtered_queryset.order_by('-id')[start_row:start_row+chunk_size].values()
+            if not filtered_rcvr_queryset:
+                break
+            semifinal_query = 'SELECT frequency_mhz,intensity_jy FROM Master_RFI_Catalog WHERE Frequency_MHz in '+str(tuple([float(single_list['frequency_mhz']) for single_list in filtered_rcvr_queryset]))+' AND mjd in '+str(tuple([float(single_list['mjd']) for single_list in filtered_rcvr_queryset]))+' ORDER BY ID'
+	    
+	    
+            print('have query, starting connection')
+            #start_row = 0
+            #chunk_size = 1
+            #final_query = semifinal_query + ' LIMIT '+start_row+', '+chunk_size
+            final_query = semifinal_query
+            p = multiprocessing.Process(target=parse_query_chunk,args=(final_query,temp_filename))
+            print('starting multiprocess')
+            p.start()
+            p.join()
+            gc.collect()
+            #start_row += chunk_size
+            #print('finished rows '+start_row)
+            start_row += chunk_size
+            print('written to '+temp_filename)
+
+
+    response = FileResponse(open(temp_filename,'rb'))
 
     return response
