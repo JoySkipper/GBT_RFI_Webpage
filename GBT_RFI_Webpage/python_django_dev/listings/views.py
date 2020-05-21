@@ -127,6 +127,17 @@ def django_save_me(request):
         filtered_queryset = latest_projects.objects.filter(frontend = url_dict['receiver']).values()[0]
         projid = filtered_queryset['projid']
         final_query = 'SELECT * from '+str(projid)
+        if 'frequency_min' in url_dict:
+            final_query += ' WHERE Frequency_MHz > '+str(url_dict['frequency_min'])
+        if 'frequency_max' in url_dict:
+            final_query += ' WHERE Frequency_MHz < '+str(url_dict['frequency_max'])
+            if 'frequency_min' in url_dict:
+                old = 'WHERE'
+                new = 'AND'
+                occurrence = 1
+                li = final_query.rsplit(old,occurrence)
+                final_query = new.join(li)
+        print(final_query)
         p = multiprocessing.Process(target=parse_query_chunk,args=(final_query,temp_filename))
         print('starting multiprocess')
         p.start()
