@@ -4,9 +4,6 @@
 
 {% block content %}
 
- <!-- Showcase -->
- <section id="showcase">
-
 <script>
     JavaScript
     //JavaScript function that enables or disables the date buttons depending
@@ -18,14 +15,20 @@
             document.getElementById("oldest_scan_date").disabled = true;
             document.getElementById("newest_scan_date").disabled = true;
             document.getElementById("projid").disabled = true;
+            document.getElementById("unchecked_warning").style.display = "none";
         } else{
             //Otherwise, disable the submit button.
             document.getElementById("oldest_scan_date").disabled = false;
             document.getElementById("newest_scan_date").disabled = false;
             document.getElementById("projid").disabled = false;
+            document.getElementById("unchecked_warning").style.display = "block";
         }
     }
-</script>
+  </script>
+
+ <!-- Showcase -->
+ <section id="showcase">
+
 
     <div class="container text-center">
       <div class="home-search p-5">
@@ -72,7 +75,7 @@
 
                 <div class="col-md-4 mb-3" style="float:left;">
                 <br>
-                <label>Choose Latest Observation</label>
+                <label>Most Recent Observation</label>
                 </div>
 
                 <br><br><br><br>
@@ -88,7 +91,13 @@
                     <input type="number" id="frequency_max" name="frequency_max" min="0">
                 </div>
               </div>
+
+             
               <br><br><br><br>
+
+<h3 id="unchecked_warning" style='display:none'>Warning: Searching large date ranges will result in a very prolonged loading time.</h3>
+
+<br><br>
 
  <!--<input type="checkbox" name="file3" value="mean" > Mean  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <input type="checkbox" name="file4" value="median" > Median  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -105,4 +114,5 @@
       </div>
     </div>
   </section>
+
 {% endblock %}
