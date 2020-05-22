@@ -24,6 +24,12 @@ https://www.djangoproject.com/start/
     - pandas
     - django 2.2+
     - pandas
+    - decimal
+    - zipfile
+    - miemtypes
+    - gc
+    - multiprocessing
+    
 * Access to either the GBO RFI database (if a GBO employee) or access to another database to which you'd like similar functionality
 
 First you will need to clone the repository locally: 
