@@ -1,18 +1,10 @@
 ## GBT_RFI_Webpage
 
-Welcome to the GBT RFI Webpage documentation. Here we cover instructions on a self-hosted webpage.  
+Welcome to the GBT RFI Webpage documentation. Here we cover instructions on a self-hosted webpage. 
 
-### Note: 
+### Functionality: 
 
-This code is still in development. There is a [video demo](https://www.youtube.com/watch?v=t7NNUBXPr_4) of the prototype, which displays the eventual functionality, but the web page has not been released yet for general use. 
-
-
-Currently, we have one search page, which searches the whole database. The web page is currently in production to split this into a quick search page and an advanced search page, so that common searches can be streamlined. The single search page is the one in the video demo.
-
-### Planned: 
-
-On the main webpage, you will eventually be able to search for a given RFI observation given your choice of receiver. If you'd like a broader range of choices, you will have the option to click "advanced options" in the lower right-hand corner. Then you can choose among all the options currently available. This will do a broad general search of the entire SQL database, so it will take some time.
-
+On the main webpage, you are able to search for a given RFI observation given your choice of receiver. You can also specify date range and the project ID, or simply select 'choose latest observation.' You will always have the option to select frequency range as well. 
 
 ## Installation: 
 
@@ -40,7 +32,7 @@ First you will need to clone the repository locally:
 git clone https://github.com/JoySkipper/GBT_RFI_Webpage
 ```
 
-You'll then need to rename settings_secure.py to settings.py and fill out the information indicated in the top: the security key, allowed hosts, and database information.
+You'll then need to rename settings_secure.py to settings.py and fill out the information indicated in the top: the security key, allowed hosts, and database information. You will also need to add a my.cnf file with your personal username and password information. See the Django documentation for more details. 
 
 At this point, you should be able to locally run the server from the python_django_dev directory: 
 
