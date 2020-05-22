@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
 
 # C extensions
 *.so
@@ -110,3 +111,4 @@ venv.bak/
 # Security Issues, don't want to upload settings with your username, password, etc. 
 settings.py
 my.cnf
+
