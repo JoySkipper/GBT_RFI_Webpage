@@ -9,9 +9,6 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-# IF YOU HAVE CLONED THIS REPO: 
-# You will need to fill out the security key, allowed hosts, and database information before launching your server.
-
 
 from django.db.backends.mysql.base import DatabaseWrapper
 DatabaseWrapper.data_types['DateTimeField'] = 'datetime' # fix for MySQL 5.5
@@ -26,12 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'fill_out'
+SECRET_KEY = 'ENTER HERE'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = 'include_database_IP'
+ALLOWED_HOSTS = ['ENTER HOSTS HERE']
 
 # Application definition
 
@@ -83,10 +80,13 @@ WSGI_APPLICATION = 'btre.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'your_database_name'
-        'USER': 'your_username'
-        'PASSWORD':'your_password',
-        'HOST': 'host_ip'
+        'NAME': 'rfi_data',
+        'USER': 'ENTER USERNAME',
+        'PASSWORD':'ENTER PASSWORD',
+        'HOST':'trent2',
+        'OPTIONS': {
+            'sql_mode':'traditional',
+        }
         
         
     }
@@ -134,3 +134,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'btre/static')
 ]
+
+# Media Folder Settings
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
