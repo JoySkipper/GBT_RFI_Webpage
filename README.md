@@ -8,5 +8,5 @@ GBT RFI Webpage is the public-facing webpage containing access to the Green Bank
 <img src="images/received_data.jpg" width="290">
 </p>
 
-### [See Documentation](docs/how_to_run.md)
+### [See Documentation](docs/)
 
