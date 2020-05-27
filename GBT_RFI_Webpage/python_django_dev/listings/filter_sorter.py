@@ -6,6 +6,8 @@
 Code Origin: https://github.com/JoySkipper/GBT_RFI_Webpage
 """
 from .models import Prime_Focus,Rcvr1_2,Rcvr2_3,Rcvr4_6,Rcvr8_10,Rcvr12_18,Rcvr26_40,Rcvr40_52,Rcvr68_92,RcvrArray18_26,RcvrArray75_115,RcvrMBA1_2
+from astropy.time import Time
+import django.core.exceptions
 
 class filter_sorter: 
 
@@ -33,9 +35,21 @@ class filter_sorter:
     def setProjid(self, projid):
         self.queryset = self.queryset.filter(projid__icontains = projid)
     def setDateMin(self, oldest_scan_date):
-        self.queryset = self.queryset.filter(date__gte = oldest_scan_date)
+        try:
+            self.queryset = self.queryset.filter(date__gte = oldest_scan_date)
+        except django.core.exceptions.FieldError:
+            oldest_scan_date = oldest_scan_date+'T00:00:00'
+            oldest_scan_datetime = Time(oldest_scan_date,format='isot',scale='utc')
+            mjd = oldest_scan_datetime.mjd
+            self.queryset = self.queryset.filter(mjd__gte = mjd)
     def setDateMax(self, newest_scan_date):
-        self.queryset = self.queryset.filter(date__lte = newest_scan_date)
+        try:
+            self.queryset = self.queryset.filter(date__kte = newest_scan_date)
+        except django.core.exceptions.FieldError:
+            newest_scan_date = newest_scan_date+'T00:00:00'
+            newest_scan_datetime = Time(newest_scan_date,format='isot',scale='utc')
+            mjd = newest_scan_datetime.mjd
+            self.queryset = self.queryset.filter(mjd__lte = mjd)
     def setFreqMin(self, frequency_min):
         self.queryset = self.queryset.filter(frequency_mhz__gte = frequency_min)
     def setFreqMax(self, frequency_max):

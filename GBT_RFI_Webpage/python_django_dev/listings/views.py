@@ -192,11 +192,15 @@ def django_save_me(request):
             print('written to '+temp_filename)
 
     count = 0
-    with open(temp_filename,'r') as f:
-        for line in f:
-            count += 1
-            if count > 1:
-                break
+    # Checks if data was written to the file, or if it was just the title line (ie. the database found nothing)
+    try:
+        with open(temp_filename,'r+') as f:
+            for line in f:
+                count += 1
+                if count > 1:
+                    break
+    except FileNotFoundError:
+        count = 0
     if count > 1:
         response = FileResponse(open(temp_filename,'rb'))
     else:
