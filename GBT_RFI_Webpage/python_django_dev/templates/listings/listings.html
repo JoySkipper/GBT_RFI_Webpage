@@ -78,6 +78,7 @@
 
 <br><br>
 
+<!-- Option to download graphing script for data -->
 <div style='text-align: center;'>
 <a href = "https://github.com/JoySkipper/GBT_RFI_Grapher/archive/v1.0.zip" download>
 <input type="button" value="Download Script to Graph your Data" style="background-color: #8557A3; border-color: #8557A3; color: white;"
@@ -168,10 +169,12 @@ name="python_download" style='float:center'/>
                 success: function(response) {
                     $('#myloader').hide();
                     $('#loading_text').hide();  
+                    // If the response is not found but we didn't get an explicit failure, then we know that the query returned no results.
                     if  (typeof(response) == "undefined")
                         $('#noresults_text').show(); 
                     else {
                         $('#return_text').show();
+                        // Save the response file as a download. Default is RFI_data.txt, but it can be renamed to anything in the gui
                         Download.save(response,"RFI_data.txt");
                         return response;
                     }
